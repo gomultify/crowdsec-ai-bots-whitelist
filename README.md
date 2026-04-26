@@ -22,12 +22,12 @@ IP ranges in `data/` are refreshed daily by GitHub Actions and committed automat
 
 ```bash
 # Install the postoverflow
-cscli postoverflows install trymultify/ai-bots-whitelist \
+cscli postoverflows install gomultify/ai-bots-whitelist \
   --download-only \
   --config-dir /etc/crowdsec
 
 # Or copy manually
-cp postoverflows/s01-whitelist/trymultify/ai-bots-whitelist.yaml \
+cp postoverflows/s01-whitelist/gomultify/ai-bots-whitelist.yaml \
   /etc/crowdsec/postoverflows/s01-whitelist/
 
 # Reload CrowdSec
@@ -41,7 +41,7 @@ docker compose restart crowdsec-agent
 ```yaml
 crowdsec-agent:
   volumes:
-    - ./crowdsec-ai-bots-whitelist/postoverflows:/etc/crowdsec/postoverflows/s01-whitelist/trymultify:ro
+    - ./crowdsec-ai-bots-whitelist/postoverflows:/etc/crowdsec/postoverflows/s01-whitelist/gomultify:ro
 ```
 
 ## Verify

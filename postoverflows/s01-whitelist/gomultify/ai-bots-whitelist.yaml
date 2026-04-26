@@ -1,4 +1,4 @@
-name: trymultify/ai-bots-whitelist
+name: gomultify/ai-bots-whitelist
 description: "Whitelist legitimate AI crawlers (GPTBot, OAI-SearchBot, PerplexityBot, Applebot, YandexBot)"
 whitelist:
   reason: "Legitimate AI crawler"
@@ -9,18 +9,18 @@ whitelist:
     - "any(File('applebot_ips.txt'), { len(#) > 0 && IpInRange(evt.Overflow.Alert.Source.IP, #) })"
     - "any(File('yandexbot_ips.txt'), { len(#) > 0 && IpInRange(evt.Overflow.Alert.Source.IP, #) })"
 data:
-  - source_url: https://raw.githubusercontent.com/trymultify/crowdsec-ai-bots-whitelist/main/data/gptbot_ips.txt
+  - source_url: https://raw.githubusercontent.com/gomultify/crowdsec-ai-bots-whitelist/main/data/gptbot_ips.txt
     dest_file: gptbot_ips.txt
     type: string
-  - source_url: https://raw.githubusercontent.com/trymultify/crowdsec-ai-bots-whitelist/main/data/oai_searchbot_ips.txt
+  - source_url: https://raw.githubusercontent.com/gomultify/crowdsec-ai-bots-whitelist/main/data/oai_searchbot_ips.txt
     dest_file: oai_searchbot_ips.txt
     type: string
-  - source_url: https://raw.githubusercontent.com/trymultify/crowdsec-ai-bots-whitelist/main/data/perplexitybot_ips.txt
+  - source_url: https://raw.githubusercontent.com/gomultify/crowdsec-ai-bots-whitelist/main/data/perplexitybot_ips.txt
     dest_file: perplexitybot_ips.txt
     type: string
-  - source_url: https://raw.githubusercontent.com/trymultify/crowdsec-ai-bots-whitelist/main/data/applebot_ips.txt
+  - source_url: https://raw.githubusercontent.com/gomultify/crowdsec-ai-bots-whitelist/main/data/applebot_ips.txt
     dest_file: applebot_ips.txt
     type: string
-  - source_url: https://raw.githubusercontent.com/trymultify/crowdsec-ai-bots-whitelist/main/data/yandexbot_ips.txt
+  - source_url: https://raw.githubusercontent.com/gomultify/crowdsec-ai-bots-whitelist/main/data/yandexbot_ips.txt
     dest_file: yandexbot_ips.txt
     type: string
