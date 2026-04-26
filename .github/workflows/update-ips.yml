@@ -1,0 +1,60 @@
+name: Update AI bot IP ranges
+
+on:
+  schedule:
+    - cron: '0 3 * * *'  # daily at 03:00 UTC
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch GPTBot IPs
+        run: |
+          curl -fsSL https://openai.com/gptbot.json \
+            | jq -r '.prefixes[].ipv4Prefix' \
+            > data/gptbot_ips.txt
+          echo "GPTBot: $(wc -l < data/gptbot_ips.txt) prefixes"
+
+      - name: Fetch OAI-SearchBot IPs
+        run: |
+          curl -fsSL https://openai.com/searchbot.json \
+            | jq -r '.prefixes[].ipv4Prefix' \
+            > data/oai_searchbot_ips.txt
+          echo "OAI-SearchBot: $(wc -l < data/oai_searchbot_ips.txt) prefixes"
+
+      - name: Fetch PerplexityBot IPs
+        run: |
+          curl -fsSL https://www.perplexity.ai/perplexitybot.json \
+            | jq -r '.prefixes[].ipv4Prefix' \
+            > data/perplexitybot_ips.txt
+          echo "PerplexityBot: $(wc -l < data/perplexitybot_ips.txt) prefixes"
+
+      - name: Fetch Applebot IPs
+        run: |
+          curl -fsSL https://search.developer.apple.com/applebot.json \
+            | jq -r '.prefixes[].ipv4Prefix' \
+            > data/applebot_ips.txt
+          echo "Applebot: $(wc -l < data/applebot_ips.txt) prefixes"
+
+      - name: Write YandexBot IPs
+        run: |
+          # yandex.com/ips is JS-rendered — ranges are stable, update manually
+          cat data/yandexbot_ips.txt | wc -l | xargs -I{} echo "YandexBot: {} prefixes (static)"
+
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit -m "chore: update AI bot IP ranges $(date -u +%Y-%m-%d)"
+            git push
+          fi
